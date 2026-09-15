@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="RDiazClock.Core/RDiazClock.Core.csproj" Id="dd4356bb-2f39-4108-af22-960bc3343114" />
+  <Project Path="RDiazClock.Tests/RDiazClock.Tests.csproj" Id="a4ef93a2-c4ef-4ea6-a39e-d78eb2e35cf4" />
+  <Project Path="RDiazClock.Web/RDiazClock.Web.csproj" />
+</Solution>

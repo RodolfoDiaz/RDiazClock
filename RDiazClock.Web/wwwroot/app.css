@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    background-color: #f4f4f9;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.log-box {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    background: #1e1e1e;
+    color: #00ff00;
+    font-family: monospace;
+}
+
+.tick {
+    color: #00ff00;
+}
+/* Green */
+.tock {
+    color: #ffff00;
+}
+/* Yellow */
+.bong {
+    color: #ff00ff;
+}
+/* Magenta */
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 0.6rem 1.2rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #0056b3;
+}

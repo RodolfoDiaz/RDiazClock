@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodolfo Diaz - Clock</title>
+    <link rel="stylesheet" href="App.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Clock Application</h2>
+
+        <div class="form-group">
+            <h3>Update Clock Sounds</h3>
+            <label for="tickInput">Tick (Every Second):</label>
+            <input type="text" id="tickInput" placeholder="tick">
+
+            <label for="tockInput">Tock (Every Minute):</label>
+            <input type="text" id="tockInput" placeholder="tock">
+
+            <label for="bongInput">Bong (Every Hour):</label>
+            <input type="text" id="bongInput" placeholder="bong">
+            <br><br>
+            <button onclick="updateSettings()">Update Sounds</button>
+        </div>
+
+        <h3>Live Output</h3>
+        <div class="log-box" id="logBox"></div>
+    </div>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/clockHub")
+            .build();
+
+        connection.on("ReceiveTick", (message, time) => {
+            const logBox = document.getElementById("logBox");
+            const entry = document.createElement("div");
+
+            // Assign the class name dynamically (falls back to lowercase for matching)
+            const soundClass = message.toLowerCase();
+            entry.className = soundClass;
+
+            entry.textContent = `[${time}] ${message}`;
+            logBox.appendChild(entry);
+            logBox.scrollTop = logBox.scrollHeight;
+        });
+
+        connection.on("ReceiveLog", (log) => {
+            const logBox = document.getElementById("logBox");
+            const entry = document.createElement("div");
+            entry.textContent = `*** ${log} ***`;
+            entry.style.color = "#ffcc00";
+            logBox.appendChild(entry);
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        async function fetchSettings() {
+            const response = await fetch('/api/clock/settings');
+            const data = await response.json();
+            document.getElementById('tickInput').value = data.tickMessage;
+            document.getElementById('tockInput').value = data.tockMessage;
+            document.getElementById('bongInput').value = data.bongMessage;
+        }
+
+        async function updateSettings() {
+            const tick = document.getElementById('tickInput').value;
+            const tock = document.getElementById('tockInput').value;
+            const bong = document.getElementById('bongInput').value;
+
+            await fetch('/api/clock/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tickMessage: tick, tockMessage: tock, bongMessage: bong })
+            });
+        }
+
+        fetchSettings();
+    </script>
+</body>
+</html>
